@@ -1,6 +1,6 @@
 #include "NFA.hpp"
 #include "DFA.hpp"
-#include "Parser.hpp"
+#include "RegularExp.hpp"
 
 
 using namespace std;
@@ -24,11 +24,11 @@ template<> CHAR Global<CHAR>::epsilon = 0;
 ID State::counter = 0;
 
 /**
-* test construct NFA
+* test reg to NFA
 */
-void testDump(string fileName) {
-        Parser<CHAR> parser;
-        NFA<CHAR>* nfa = parser.parse(fileName);
+void testReg2NFA(string reg) {
+        BasicRegEx<CHAR> regEx = BasicRegEx<CHAR>(reg); 
+        NFA<CHAR>* nfa = regEx.mkNFA(); 
         cout<<"nfa:"<<endl;
         nfa->output();
         cout<<endl;
@@ -37,12 +37,12 @@ void testDump(string fileName) {
 
 
 int main(int argc, char const *argv[]) {
-        string fileName1 = "";
+        string reg = "";
         if(argc == 2)
         {
             // test input
-            fileName1 = argv[1];
-            testDump(fileName1);
+            reg = argv[1];
+            testReg2NFA(reg);
         }
         return 0;
 }
